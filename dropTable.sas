@@ -1,0 +1,10 @@
+%macro dropTable(dsName);
+	%do i=1 %to %sysfunc(countw(&dsName));
+		%let tableName=%scan(&dsName.,&i.,%str( ));
+		%if %sysfunc(exist(&tableName)) %then %do;
+			proc sql noprint;
+				drop table &tableName.;
+			quit;
+		%end;
+	%end;
+%mend;
